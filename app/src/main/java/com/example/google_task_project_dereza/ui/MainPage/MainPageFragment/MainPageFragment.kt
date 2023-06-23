@@ -1,4 +1,4 @@
-package com.example.google_task_project_dereza.ui.MainPage
+package com.example.google_task_project_dereza.ui.MainPage.MainPageFragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -28,7 +28,7 @@ class MainPageFragment:Fragment() {
     }
 
     companion object{
-        fun newInstance():MainPageFragment{
+        fun newInstance(): MainPageFragment {
             return MainPageFragment()
         }
     }
