@@ -14,6 +14,8 @@ class ListFragment:Fragment() {
     private var _binding: FragmentListBinding? = null
     private val binding get() = _binding!!
 
+    private val adapter: ListAdapter = ListAdapter()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -22,6 +24,11 @@ class ListFragment:Fragment() {
         _binding = FragmentListBinding.inflate(inflater, container, false)
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.recyclerView.adapter = adapter
     }
 
     override fun onDetach() {

@@ -23,7 +23,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/checkBox"
         app:layout_constraintStart_toEndOf="@+id/checkBox"
         app:layout_constraintTop_toTopOf="@+id/checkBox"
-        tools:text="Task name" />
+        android:text="Task name" />
 
     <ImageButton
         android:id="@+id/imageButton"

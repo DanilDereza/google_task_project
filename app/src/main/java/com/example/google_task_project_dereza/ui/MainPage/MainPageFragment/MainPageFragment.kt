@@ -30,21 +30,23 @@ class MainPageFragment:Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         pagerAdapter = PagerAdapter(this)
-        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                binding.viewPager.currentItem = tab!!.position
-            }
-            override fun onTabUnselected(tab: TabLayout.Tab?) {}
-            override fun onTabReselected(tab: TabLayout.Tab?) {}
-        })
+
         binding.viewPager.apply {
-            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+            adapter = pagerAdapter
+            registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback(){
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
                     binding.tabLayout.getTabAt(position)!!.select()
                 }
             })
         }
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                binding.viewPager.currentItem = tab.position
+            }
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        })
     }
 
     override fun onDetach() {
