@@ -6,12 +6,13 @@ import androidx.room.Room
 import com.example.google_task_project_dereza.data.database.DataAccessObject
 import com.example.google_task_project_dereza.data.database.TaskDatabase
 import com.example.google_task_project_dereza.data.models.TaskDataModel
+import com.example.google_task_project_dereza.domain.repository.Repository
 import java.lang.IllegalStateException
 import java.util.UUID
 
 private const val DATABASE_NAME = "SQLiteDATABASE"
 
-class TaskRepository private constructor(context: Context) {
+class TaskRepository private constructor(context: Context):Repository {
 
     private val database: TaskDatabase = Room.databaseBuilder(
         context = context,
@@ -21,19 +22,19 @@ class TaskRepository private constructor(context: Context) {
 
     private val dao: DataAccessObject = database.dataAccessObject()
 
-    fun getTAsks(): LiveData<List<TaskDataModel>> = dao.getTasks()
+    override fun getTAsks(): LiveData<List<TaskDataModel>> = dao.getTasks()
 
-    fun getFavoriteTasks(): LiveData<List<TaskDataModel>> = dao.getFavoriteTasks()
+    override fun getFavoriteTasks(): LiveData<List<TaskDataModel>> = dao.getFavoriteTasks()
 
-    fun getCompletedTasks(): LiveData<List<TaskDataModel>> = dao.getCompletedTasks()
+    override fun getCompletedTasks(): LiveData<List<TaskDataModel>> = dao.getCompletedTasks()
 
-    fun getSubtasks(parentID: UUID): LiveData<List<TaskDataModel>> = dao.getSubtasks(parentID)
+    override fun getSubtasks(parentID: UUID): LiveData<List<TaskDataModel>> = dao.getSubtasks(parentID)
 
-    suspend fun addNewTask(task: TaskDataModel) = dao.addNewTask(task)
+    override suspend fun addNewTask(task: TaskDataModel) = dao.addNewTask(task)
 
-    suspend fun updateDataTask(task: TaskDataModel) = dao.updateDataTask(task)
+    override suspend fun updateDataTask(task: TaskDataModel) = dao.updateDataTask(task)
 
-    suspend fun deleteTask(task: TaskDataModel) = dao.deleteTask(task)
+    override suspend fun deleteTask(task: TaskDataModel) = dao.deleteTask(task)
 
     companion object{
         private var repository: TaskRepository? = null
