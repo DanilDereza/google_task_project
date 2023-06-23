@@ -6,6 +6,7 @@ import androidx.room.Room
 import com.example.google_task_project_dereza.data.database.DataAccessObject
 import com.example.google_task_project_dereza.data.database.TaskDatabase
 import com.example.google_task_project_dereza.data.models.TaskDataModel
+import java.lang.IllegalStateException
 import java.util.UUID
 
 private const val DATABASE_NAME = "SQLiteDATABASE"
@@ -33,4 +34,17 @@ class TaskRepository private constructor(context: Context) {
     suspend fun updateDataTask(task: TaskDataModel) = dao.updateDataTask(task)
 
     suspend fun deleteTask(task: TaskDataModel) = dao.deleteTask(task)
+
+    companion object{
+        private var repository: TaskRepository? = null
+
+        fun get():TaskRepository{
+            return repository ?: throw IllegalStateException("The repository is not initialized")
+        }
+
+        fun init(context: Context){
+            if (repository == null)
+                repository = TaskRepository(context)
+        }
+    }
 }
