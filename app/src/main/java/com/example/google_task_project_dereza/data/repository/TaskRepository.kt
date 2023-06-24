@@ -22,7 +22,7 @@ class TaskRepository private constructor(context: Context):Repository {
 
     private val dao: DataAccessObject = database.dataAccessObject()
 
-    override fun getTAsks(): LiveData<List<TaskDataModel>> = dao.getTasks()
+    override fun getTasks(): LiveData<List<TaskDataModel>> = dao.getTasks()
 
     override fun getFavoriteTasks(): LiveData<List<TaskDataModel>> = dao.getFavoriteTasks()
 

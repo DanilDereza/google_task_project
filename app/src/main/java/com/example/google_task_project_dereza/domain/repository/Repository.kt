@@ -6,7 +6,7 @@ import com.example.google_task_project_dereza.data.models.TaskDataModel
 import java.util.UUID
 
 interface Repository {
-    fun getTAsks(): LiveData<List<TaskDataModel>>
+    fun getTasks(): LiveData<List<TaskDataModel>>
 
     fun getFavoriteTasks(): LiveData<List<TaskDataModel>>
 
