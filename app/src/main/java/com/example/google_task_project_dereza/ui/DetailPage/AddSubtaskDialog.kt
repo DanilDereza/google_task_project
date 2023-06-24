@@ -11,11 +11,10 @@ import com.example.google_task_project_dereza.data.models.TaskDataModel
 import com.example.google_task_project_dereza.databinding.DialogAddSubtaskBinding
 import java.util.UUID
 
-class AddSubtaskDialog(): DialogFragment(){
+class AddSubtaskDialog(private val hostListener: AddSubtaskListener): DialogFragment(){
     private var _binding: DialogAddSubtaskBinding? = null
     private val binding get()= _binding!!
 
-    private lateinit var hostListener: AddSubtaskListener
     private lateinit var parentId: UUID
 
     override fun onCreateView(
@@ -25,7 +24,6 @@ class AddSubtaskDialog(): DialogFragment(){
     ): View {
         _binding = DialogAddSubtaskBinding.inflate(inflater, container, false)
 
-        hostListener = requireArguments().getSerializable(PARENT_LISTENER) as AddSubtaskListener
         parentId = requireArguments().getSerializable(PARENT_TASK_ID) as UUID
 
         return binding.root
@@ -65,16 +63,14 @@ class AddSubtaskDialog(): DialogFragment(){
     companion object{
 
         private const val PARENT_TASK_ID = "parentTaskId"
-        private const val PARENT_LISTENER = "parentListener"
 
         fun newInstance(hostListener: AddSubtaskListener, id:UUID):AddSubtaskDialog{
             val args = bundleOf(
-                PARENT_TASK_ID to id,
-                PARENT_LISTENER to hostListener
+                PARENT_TASK_ID to id
             )
 
-            return AddSubtaskDialog().apply {
-
+            return AddSubtaskDialog(hostListener).apply {
+                arguments = args
             }
         }
     }

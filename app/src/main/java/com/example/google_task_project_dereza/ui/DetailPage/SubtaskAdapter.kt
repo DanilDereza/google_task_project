@@ -8,18 +8,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.google_task_project_dereza.R
 import com.example.google_task_project_dereza.data.models.TaskDataModel
 import com.example.google_task_project_dereza.databinding.ItemTaskBinding
+import com.example.google_task_project_dereza.ui.MainPage.ListFragment.AdapterListener
 
-class SubtaskAdapter(private val hostListener: ):RecyclerView.Adapter<SubtaskAdapter.ViewHolder>() {
+class SubtaskAdapter(private val hostListener: AdapterListener):RecyclerView.Adapter<SubtaskAdapter.ViewHolder>() {
 
     private var data: MutableList<TaskDataModel> = mutableListOf()
 
     inner class ViewHolder(view: View):RecyclerView.ViewHolder(view){
         private val binding = ItemTaskBinding.bind(view)
         fun execute(task:TaskDataModel){
+            println("_____________________________$task")
             binding.apply {
                 textView.text = task.taskName
-                val favoriteImg = if (task.isFavorite) R.drawable.baseline_white_star_24 else R.drawable.baseline_white_star_border_24
-                favoriteButton.setImageResource(favoriteImg)
+                favoriteButton.visibility = View.GONE
                 checkBox.isChecked = task.isDone
 
                 checkBox.setOnClickListener{
@@ -27,17 +28,8 @@ class SubtaskAdapter(private val hostListener: ):RecyclerView.Adapter<SubtaskAda
                     hostListener.onChanged(task)
                 }
 
-                favoriteButton.setOnClickListener{
-                    task.isFavorite = !task.isFavorite
-                    hostListener.onChanged(task)
-                }
-
                 deleteButton.setOnClickListener{
                     hostListener.onDelete(task)
-                }
-
-                root.setOnClickListener{
-                    hostListener.onClick(task.id)
                 }
             }
         }

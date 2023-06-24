@@ -8,5 +8,5 @@ interface AdapterListener {
 
     fun onDelete(task: TaskDataModel)
 
-    fun onClick(id:UUID)
+    fun onClick(id:UUID){}
 }

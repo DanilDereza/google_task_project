@@ -30,4 +30,16 @@ class DetailFragmentViewModel:ViewModel() {
             repository.addNewTask(subtask)
         }
     }
+
+    fun onChangeTask(task: TaskDataModel){
+        viewModelScope.launch {
+            repository.updateDataTask(task)
+        }
+    }
+
+    fun onDeleteTask(task: TaskDataModel){
+        viewModelScope.launch {
+            repository.deleteTask(task)
+        }
+    }
 }
