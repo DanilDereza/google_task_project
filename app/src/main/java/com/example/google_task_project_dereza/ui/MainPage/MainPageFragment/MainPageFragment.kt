@@ -5,17 +5,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
+import com.example.google_task_project_dereza.data.models.TaskDataModel
 import com.example.google_task_project_dereza.databinding.FragmentMainPageBinding
 import com.google.android.material.tabs.TabLayout
 
 private const val REQUEST_ADD_TASK = 0
 private const val DIALOG_ADD_TASK = "addTaskDialog"
 
-class MainPageFragment:Fragment() {
+class MainPageFragment:Fragment(), AddTaskListener {
 
     private var _binding: FragmentMainPageBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: MainPageFragmentViewModel by lazy {
+        ViewModelProvider(this)[MainPageFragmentViewModel::class.java]
+    }
 
     private lateinit var pagerAdapter: PagerAdapter
 
@@ -52,7 +58,7 @@ class MainPageFragment:Fragment() {
         })
 
         binding.addButton.setOnClickListener{
-            AddTaskDialog.newInstance().apply {
+            AddTaskDialog(this).apply {
                 setTargetFragment(this@MainPageFragment, REQUEST_ADD_TASK)
                 show(this@MainPageFragment.requireFragmentManager(), DIALOG_ADD_TASK)
             }
@@ -68,5 +74,9 @@ class MainPageFragment:Fragment() {
         fun newInstance(): MainPageFragment {
             return MainPageFragment()
         }
+    }
+
+    override fun addTask(task: TaskDataModel) {
+        viewModel.addNewTask(task)
     }
 }
