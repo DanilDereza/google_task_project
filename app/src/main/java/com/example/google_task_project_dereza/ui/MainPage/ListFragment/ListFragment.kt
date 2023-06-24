@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.google_task_project_dereza.data.models.TaskDataModel
 import com.example.google_task_project_dereza.databinding.FragmentListBinding
 import java.util.UUID
 
-class ListFragment:Fragment() {
+class ListFragment:Fragment(), AdapterListener {
 
     private var _binding: FragmentListBinding? = null
     private val binding get() = _binding!!
@@ -19,7 +20,7 @@ class ListFragment:Fragment() {
         ViewModelProvider(this)[ListFragmentViewModel::class.java]
     }
 
-    private val adapter: ListAdapter = ListAdapter()
+    private val adapter: ListAdapter = ListAdapter(this)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,5 +67,13 @@ class ListFragment:Fragment() {
                 arguments = arg
             }
         }
+    }
+
+    override fun onChanged(task: TaskDataModel) {
+        viewModel.onChangeTask(task)
+    }
+
+    override fun onDelete(task: TaskDataModel) {
+        viewModel.onDeleteTask(task)
     }
 }

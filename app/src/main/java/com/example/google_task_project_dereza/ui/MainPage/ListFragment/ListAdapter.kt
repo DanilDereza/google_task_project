@@ -9,7 +9,7 @@ import com.example.google_task_project_dereza.R
 import com.example.google_task_project_dereza.data.models.TaskDataModel
 import com.example.google_task_project_dereza.databinding.ItemTaskBinding
 
-class ListAdapter():RecyclerView.Adapter<ListAdapter.ViewHolder>() {
+class ListAdapter(private val hostListener: AdapterListener):RecyclerView.Adapter<ListAdapter.ViewHolder>() {
 
     private var data: MutableList<TaskDataModel> = mutableListOf()
 
@@ -18,6 +18,23 @@ class ListAdapter():RecyclerView.Adapter<ListAdapter.ViewHolder>() {
         fun execute(task:TaskDataModel){
             binding.apply {
                 textView.text = task.taskName
+                val favoriteImg = if (task.isFavorite) R.drawable.baseline_white_star_24 else R.drawable.baseline_white_star_border_24
+                favoriteButton.setImageResource(favoriteImg)
+                checkBox.isChecked = task.isDone
+
+                checkBox.setOnClickListener{
+                    task.isDone = !task.isDone
+                    hostListener.onChanged(task)
+                }
+
+                favoriteButton.setOnClickListener{
+                    task.isFavorite = !task.isFavorite
+                    hostListener.onChanged(task)
+                }
+
+                deleteButton.setOnClickListener{
+                    hostListener.onDelete(task)
+                }
             }
         }
     }
