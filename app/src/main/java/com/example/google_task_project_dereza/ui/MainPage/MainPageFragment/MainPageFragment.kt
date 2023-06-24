@@ -9,6 +9,9 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.google_task_project_dereza.databinding.FragmentMainPageBinding
 import com.google.android.material.tabs.TabLayout
 
+private const val REQUEST_ADD_TASK = 0
+private const val DIALOG_ADD_TASK = "addTaskDialog"
+
 class MainPageFragment:Fragment() {
 
     private var _binding: FragmentMainPageBinding? = null
@@ -47,6 +50,13 @@ class MainPageFragment:Fragment() {
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
+
+        binding.addButton.setOnClickListener{
+            AddTaskDialog.newInstance().apply {
+                setTargetFragment(this@MainPageFragment, REQUEST_ADD_TASK)
+                show(this@MainPageFragment.requireFragmentManager(), DIALOG_ADD_TASK)
+            }
+        }
     }
 
     override fun onDetach() {
