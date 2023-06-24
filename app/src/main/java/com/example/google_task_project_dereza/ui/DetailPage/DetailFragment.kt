@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.google_task_project_dereza.data.models.TaskDataModel
 import com.example.google_task_project_dereza.databinding.FragmentDetailBinding
 import java.util.UUID
 
-class DetailFragment: Fragment() {
+class DetailFragment: Fragment(), AddSubtaskListener {
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
 
@@ -60,6 +61,10 @@ class DetailFragment: Fragment() {
                 arguments = arg
             }
         }
+    }
+
+    override fun addSubtask(subtask: TaskDataModel) {
+        viewModel.addSubtask(subtask)
     }
 
 }

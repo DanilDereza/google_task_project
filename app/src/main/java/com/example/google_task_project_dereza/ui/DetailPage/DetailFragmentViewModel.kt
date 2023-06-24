@@ -4,8 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.google_task_project_dereza.data.models.TaskDataModel
 import com.example.google_task_project_dereza.data.repository.TaskRepository
+import kotlinx.coroutines.launch
 import java.util.UUID
 
 class DetailFragmentViewModel:ViewModel() {
@@ -22,4 +24,10 @@ class DetailFragmentViewModel:ViewModel() {
     }
 
     fun setTaskId(id:UUID) {taskId.value = id}
+
+    fun addSubtask(subtask:TaskDataModel){
+        viewModelScope.launch {
+            repository.addNewTask(subtask)
+        }
+    }
 }
