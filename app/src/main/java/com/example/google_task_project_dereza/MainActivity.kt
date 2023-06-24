@@ -10,7 +10,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setFragment(MainPageFragment.newInstance())
+
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+
+        if(currentFragment == null){
+            val fragment = MainPageFragment.newInstance()
+            supportFragmentManager.beginTransaction().add(R.id.fragment_container,fragment).commit()
+        }
     }
 
     fun setFragment(fragment: Fragment) {
