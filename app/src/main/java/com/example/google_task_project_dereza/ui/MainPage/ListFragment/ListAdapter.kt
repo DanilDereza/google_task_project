@@ -35,6 +35,10 @@ class ListAdapter(private val hostListener: AdapterListener):RecyclerView.Adapte
                 deleteButton.setOnClickListener{
                     hostListener.onDelete(task)
                 }
+
+                root.setOnClickListener{
+                    hostListener.onClick(task.id)
+                }
             }
         }
     }

@@ -14,9 +14,12 @@ interface Repository {
 
     fun getSubtasks(parentID: UUID): LiveData<List<TaskDataModel>>
 
+    fun getTask(taskId: UUID): LiveData<TaskDataModel>
+
     suspend fun addNewTask(task: TaskDataModel)
 
     suspend fun updateDataTask(task: TaskDataModel)
 
     suspend fun deleteTask(task: TaskDataModel)
+
 }

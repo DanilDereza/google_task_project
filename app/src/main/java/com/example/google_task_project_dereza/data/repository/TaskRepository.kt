@@ -30,6 +30,8 @@ class TaskRepository private constructor(context: Context):Repository {
 
     override fun getSubtasks(parentID: UUID): LiveData<List<TaskDataModel>> = dao.getSubtasks(parentID)
 
+    override fun getTask(taskId: UUID): LiveData<TaskDataModel> = dao.getTask(taskId)
+
     override suspend fun addNewTask(task: TaskDataModel) = dao.addNewTask(task)
 
     override suspend fun updateDataTask(task: TaskDataModel) = dao.updateDataTask(task)

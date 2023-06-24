@@ -1,5 +1,6 @@
 package com.example.google_task_project_dereza.ui.MainPage.ListFragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,8 +8,10 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.google_task_project_dereza.MainActivity
 import com.example.google_task_project_dereza.data.models.TaskDataModel
 import com.example.google_task_project_dereza.databinding.FragmentListBinding
+import com.example.google_task_project_dereza.ui.DetailPage.DetailFragment
 import java.util.UUID
 
 class ListFragment:Fragment(), AdapterListener {
@@ -20,7 +23,13 @@ class ListFragment:Fragment(), AdapterListener {
         ViewModelProvider(this)[ListFragmentViewModel::class.java]
     }
 
+    lateinit var  hostActivity: MainActivity
     private val adapter: ListAdapter = ListAdapter(this)
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        hostActivity = context as MainActivity
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -75,5 +84,9 @@ class ListFragment:Fragment(), AdapterListener {
 
     override fun onDelete(task: TaskDataModel) {
         viewModel.onDeleteTask(task)
+    }
+
+    override fun onClick(id: UUID) {
+        hostActivity.setFragment(DetailFragment.newInstance(id))
     }
 }

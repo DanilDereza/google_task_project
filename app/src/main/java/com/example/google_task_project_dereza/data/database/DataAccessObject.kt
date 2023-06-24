@@ -24,6 +24,9 @@ interface DataAccessObject {
     @Query("SELECT * FROM TaskDataModel WHERE subtask=(:parentID)")
     fun getSubtasks(parentID: UUID): LiveData<List<TaskDataModel>>
 
+    @Query("SELECT * FROM TaskDataModel WHERE id=(:taskId)")
+    fun getTask(taskId: UUID): LiveData<TaskDataModel>
+
     @Insert
     suspend fun addNewTask(task:TaskDataModel)
 
